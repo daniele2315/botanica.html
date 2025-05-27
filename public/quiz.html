@@ -2,34 +2,130 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Tipos de Plantas</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Quiz de Botânica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e0f7e9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: #fff;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        .pergunta {
+            margin-top: 20px;
+        }
+
+        .opcao {
+            margin: 10px 0;
+        }
+
+        .resultado {
+            font-weight: bold;
+            color: #2e7d32;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #388e3c;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Tipos de Plantas</h1>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="curiosidades.html">Curiosidades</a>
-            <a href="tipos.html">Tipos</a>
-            <a href="fotossintese.html">Fotossíntese</a>
-            <a href="medicinais.html">Medicinais</a>
-            <a href="contato.html">Contato</a>
-        </nav>
-    </header>
+    <div class="quiz-container">
+        <h1>Quiz de Botânica 🌱</h1>
+        <div id="quiz"></div>
+        <button onclick="verificarRespostas()">Enviar Respostas</button>
+        <div class="resultado" id="resultado"></div>
+    </div>
 
-    <main>
-        <h2>Classificações básicas:</h2>
-        <ul>
-            <li><strong>Árvores:</strong> grandes, com tronco lenhoso (ex: ipê, carvalho).</li>
-            <li><strong>Arbustos:</strong> menores, ramos próximos ao solo (ex: hibisco).</li>
-            <li><strong>Ervas:</strong> plantas com caule flexível (ex: manjericão).</li>
-            <li><strong>Trepadeiras:</strong> crescem apoiadas (ex: maracujazeiro).</li>
-        </ul>
-    </main>
+    <script>
+        const perguntas = [
+            {
+                pergunta: "1. Qual é o processo pelo qual as plantas produzem seu próprio alimento?",
+                opcoes: ["Fotossíntese", "Respiração", "Glicólise", "Fermentação"],
+                resposta: 0
+            },
+            {
+                pergunta: "2. Qual parte da planta absorve água e nutrientes do solo?",
+                opcoes: ["Folha", "Caule", "Raiz", "Flor"],
+                resposta: 2
+            },
+            {
+                pergunta: "3. Qual gás é absorvido durante a fotossíntese?",
+                opcoes: ["Oxigênio", "Nitrogênio", "Gás carbônico", "Hidrogênio"],
+                resposta: 2
+            },
+            {
+                pergunta: "4. Que pigmento dá cor verde às plantas?",
+                opcoes: ["Carotenoide", "Xantofila", "Clorofila", "Antocianina"],
+                resposta: 2
+            },
+            {
+                pergunta: "5. Qual é a estrutura reprodutiva das angiospermas?",
+                opcoes: ["Raiz", "Flor", "Folha", "Semente"],
+                resposta: 1
+            }
+        ];
 
-    <footer>
-        <p>&copy; 2025 Botânica Viva</p>
-    </footer>
+        function montarQuiz() {
+            const quizDiv = document.getElementById("quiz");
+            perguntas.forEach((q, index) => {
+                const bloco = document.createElement("div");
+                bloco.classList.add("pergunta");
+                bloco.innerHTML = `<p>${q.pergunta}</p>`;
+                q.opcoes.forEach((opcao, i) => {
+                    bloco.innerHTML += `
+                        <label class="opcao">
+                            <input type="radio" name="pergunta${index}" value="${i}">
+                            ${opcao}
+                        </label><br>
+                    `;
+                });
+                quizDiv.appendChild(bloco);
+            });
+        }
+
+        function verificarRespostas() {
+            let pontuacao = 0;
+            perguntas.forEach((q, index) => {
+                const respostas = document.getElementsByName(`pergunta${index}`);
+                respostas.forEach(r => {
+                    if (r.checked && parseInt(r.value) === q.resposta) {
+                        pontuacao++;
+                    }
+                });
+            });
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.innerText = `Você acertou ${pontuacao} de ${perguntas.length} perguntas!`;
+        }
+
+        montarQuiz();
+    </script>
 </body>
 </html>
+s
